@@ -2,6 +2,7 @@ package com.ef;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -144,6 +145,8 @@ public class Parser {
 			List<Map<String, Object>> datas = HelpCoreDB.findByMapQuery(sQuery, params, 0, 0);
 
 			if (datas != null) {
+				List<Blocked> blockeds = new ArrayList<Blocked>();
+
 				for (Map<String, Object> map : datas) {
 					System.out.println("IP: " + map.get("ip") + " -> count: " + map.get("count"));
 					Blocked blocked = new Blocked(map.get("ip").toString(), new Date(),
@@ -151,9 +154,10 @@ public class Parser {
 									+ new SimpleDateFormat("yyyy-MM-dd.HH:mm:ss").format(dstartDate) + " to "
 									+ new SimpleDateFormat("yyyy-MM-dd.HH:mm:ss").format(tDate)
 									+ ". This IP has exceeded the allowable threshold " + ithreshold);
-					HelpCoreDB.save(blocked);
-
+					blockeds.add(blocked);
 				}
+
+				HelpCoreDB.saveList(blockeds);
 			}
 
 		} catch (HibernateException e) {
@@ -163,13 +167,13 @@ public class Parser {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		System.out.println("Finished!");
 
-//		System.out.println(saccesslog);
-//		System.out.println(dstartDate);
-//		System.out.println(sduration);
-//		System.out.println(ithreshold);
+		// System.out.println(saccesslog);
+		// System.out.println(dstartDate);
+		// System.out.println(sduration);
+		// System.out.println(ithreshold);
 
 	}
 }
