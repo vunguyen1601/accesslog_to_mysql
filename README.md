@@ -17,7 +17,8 @@ Development
     - Commons CLI 1.3.1     
 
 
-Use:
+Use: How to use?
+    
     1. Login to MySQL. Then, create schema.
     
     2. Open file config/hibernate.properties. Then, declare the database account (ip,port,db_name,user,password). The account must have permission to create / edit / drop / select / update / insert / delete table.
